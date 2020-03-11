@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using React_Weather_App.Data.Repositories;
 using React_Weather_App.Helpers;
 
 namespace React_Weather_App
@@ -38,9 +39,10 @@ namespace React_Weather_App
             services.AddSingleton(mapper);
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("WeatherAppConnectionString")));
+            services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
-
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
