@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler} from 'reactstrap';
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import {SearchBar} from '../SearchBar/SearchBar.js'
-import {NavigationLink} from '../NavigationLink/NavigationLink'
-
-const LinkNames = ["Home", "Profile"]
+import { SearchBar } from '../SearchBar/SearchBar.js'
+import { NavigationLink } from '../NavigationLink/NavigationLink'
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
@@ -19,7 +17,7 @@ export class NavMenu extends Component {
     };
   }
 
-  toggleNavbar () {
+  toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
     });
@@ -27,7 +25,7 @@ export class NavMenu extends Component {
 
 
 
-  render () {
+  render() {
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
@@ -35,12 +33,10 @@ export class NavMenu extends Component {
             <NavbarBrand tag={Link} to="/">React_Weather_App</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row" isOpen={!this.state.collapsed} navbar>
-              {LinkNames.forEach(element => {
-                console.log(element)
-                return(
-                    <NavigationLink linkName={element}/>
-              )})}
-              
+              <ul className="navbar-nav flex-grow">
+                <NavigationLink linkName="Home"></NavigationLink>
+                <NavigationLink linkName="Profile"></NavigationLink>
+              </ul>
             </Collapse>
             <SearchBar></SearchBar>
           </Container>

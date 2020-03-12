@@ -4,18 +4,23 @@ import { Link } from 'react-router-dom';
 import './NavigationLink.css'
 import '../NavMenu/NavMenu.css'
 
+var link
+var linkName
 export class NavigationLink extends Component {
 
-    componentDidMount(){
-        console.log(this.props.linkName)
+    componentWillUpdate(){
+        link = "/" + this.props.linkName
+        linkName = this.props.linkName
+    }
+    componentWillMount(){
+        link = "/" + this.props.linkName
+        linkName = this.props.linkName
     }
     render() {
         return (
-            <ul className="navbar-nav flex-grow">
             <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">{this.props.linkName}</NavLink>
+                <NavLink tag={Link} className="text-dark" to={link}>{linkName}</NavLink>
             </NavItem>
-            </ul>
         )
     }
 }
