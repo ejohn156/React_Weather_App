@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody } from "reactstrap";
+import {ForecastCarousel} from '../ForecastCarousel/ForecastCarousel'
 
 export class WeeklyForecast extends Component {
     render() {
         return (
             <Card>
                 <CardHeader>
-                    <h3>City's Weekly Forecast</h3>
+                    <h3>Weather Forecast</h3>
                 </CardHeader>
                 <CardBody>
-                    Carousel displaying weekly forecast
+                    <ForecastCarousel></ForecastCarousel>
                 </CardBody>
             </Card>
         )
