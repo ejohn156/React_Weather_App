@@ -1,44 +1,57 @@
 import React, { Component } from 'react';
-import {CurrentWeather} from '../components/CurrentWeather/CurrentWeather'
+import { CurrentWeather } from '../components/CurrentWeather/CurrentWeather'
 import { FavoritesList } from '../components/FavoritesList/FavoritesList';
 import { WeeklyForecast } from '../components/WeeklyForecast/WeeklyForecast';
+import { connect } from 'react-redux'
 
-export class Home extends Component {
+
+function mapStateToProps(state) {
+  return ({
+    city: state.City
+  })
+}
+
+
+
+class Home extends Component {
+
   constructor(props) {
     super(props)
-    this.state = {
-      city: "Charlotte",
-      user: "test"
-    }
+    this.state = { city: this.props.city,
+                  user: 'test' }
   }
+
   static displayName = Home.name;
-  
-  render () {
+  render() {
     return (
       <div>
         <div className="row">
-        <div className="col-md-3">
-          <div className="row">
-            <div className="col-md-12">
-              <FavoritesList user={this.state.user}/>
+          <div className="col-md-3">
+            <div className="row">
+              <div className="col-md-12">
+                <FavoritesList user={this.state.user}/>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-9">
+            <div className="row">
+              <div className="col-md-12">
+                <CurrentWeather city={this.state.city} />
+              </div>
             </div>
           </div>
         </div>
-        <div className="col-md-9">
+        <br></br>
         <div className="row">
-            <div className="col-md-12">
-              <CurrentWeather city={this.state.city}/>
-            </div>
+          <div className="col-md-12">
+            <WeeklyForecast city={this.state.city} />
+          </div>
         </div>
-      </div>
-      </div>
-      <br></br>
-      <div className = "row">
-        <div className="col-md-12">
-          <WeeklyForecast city={this.state.city}/>
-        </div>
-      </div>
       </div>
     );
   }
+  
 }
+
+
+export default connect(mapStateToProps)(Home)

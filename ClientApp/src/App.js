@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './layout/Layout';
-import { Home } from './pages/Home';
+import Home from './pages/Home';
 import { Profile } from './pages/Profile';
 import './custom.css'
 
