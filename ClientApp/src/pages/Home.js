@@ -4,7 +4,15 @@ import { FavoritesList } from '../components/FavoritesList/FavoritesList';
 import { WeeklyForecast } from '../components/WeeklyForecast/WeeklyForecast';
 
 export class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      city: "Charlotte",
+      user: "test"
+    }
+  }
   static displayName = Home.name;
+  
   render () {
     return (
       <div>
@@ -12,14 +20,14 @@ export class Home extends Component {
         <div className="col-md-3">
           <div className="row">
             <div className="col-md-12">
-              <FavoritesList></FavoritesList>
+              <FavoritesList user={this.state.user}/>
             </div>
           </div>
         </div>
         <div className="col-md-9">
         <div className="row">
             <div className="col-md-12">
-              <CurrentWeather></CurrentWeather>
+              <CurrentWeather city={this.state.city}/>
             </div>
         </div>
       </div>
@@ -27,7 +35,7 @@ export class Home extends Component {
       <br></br>
       <div className = "row">
         <div className="col-md-12">
-          <WeeklyForecast></WeeklyForecast>
+          <WeeklyForecast city={this.state.city}/>
         </div>
       </div>
       </div>

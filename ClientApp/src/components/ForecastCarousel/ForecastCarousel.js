@@ -13,7 +13,8 @@ export class ForecastCarousel extends Component {
             ForecastRangeFirst: 0,
             ForecastRangeLast: 5,
             prevRangeFirst: 0,
-            prevRangeLast: 5
+            prevRangeLast: 5,
+            ForecastCount: 0
         }
     }
 
@@ -21,11 +22,7 @@ export class ForecastCarousel extends Component {
     getNextForecasts() {
         let newFirstIndex
         let newLastIndex
-        if(this.state.ForecastRangeLast + 5 > 40){
-        newFirstIndex = 0
-        newLastIndex = 5
-        }
-        else {
+        if (this.state.ForecastRangeLast + 5 <= this.state.Forecast.length) {
             newFirstIndex = this.state.ForecastRangeFirst + 5
             newLastIndex = this.state.ForecastRangeLast + 5
         }
@@ -37,13 +34,7 @@ export class ForecastCarousel extends Component {
     getPreviousForecasts() {
         let newFirstIndex
         let newLastIndex
-        if(this.state.ForecastRangeFirst - 5 < 0){
-            console.log("test1")
-        newFirstIndex = 35
-        newLastIndex = 40
-        }
-        else {
-            console.log("test2")
+        if (this.state.ForecastRangeFirst - 5 >= 0) {
             newFirstIndex = this.state.ForecastRangeFirst - 5
             newLastIndex = this.state.ForecastRangeLast - 5
         }
@@ -54,9 +45,9 @@ export class ForecastCarousel extends Component {
     }
 
     getWeeklyForecasts() {
-        WeatherAPI.getForecast().then(res => {
+        WeatherAPI.getForecast(this.props.city, process.env.REACT_APP_WeatherAPIKey).then(res => {
             this.setState({
-                Forecast: res.list.slice(this.state.ForecastRangeFirst, this.state.ForecastRangeLast),
+                Forecast: res.list,
                 prevRangeFirst: this.state.ForecastRangeFirst,
                 prevRangeLast: this.state.ForecastRangeLast,
             })
@@ -65,10 +56,7 @@ export class ForecastCarousel extends Component {
     }
 
     componentDidUpdate() {
-        console.log("update is occuring")
         if (this.state.prevRangeFirst !== this.state.ForecastRangeFirst || this.state.prevRangeLast !== this.state.ForecastRangeLast) {
-            console.log(this.state.ForecastRangeFirst)
-            console.log(this.state.ForecastRangeLast)
             this.getWeeklyForecasts()
         }
     }
@@ -82,14 +70,16 @@ export class ForecastCarousel extends Component {
 
             <div className="row">
                 <div className="col-md-1">
-                    <img alt='Previous' src={Next_Icon} onClick={() => this.getPreviousForecasts()}></img>
+                    {this.state.ForecastRangeFirst !== 0 ?
+                        <img alt='Previous' src={Next_Icon} onClick={() => this.getPreviousForecasts()} /> : null}
                 </div>
-                {this.state.Forecast.map(forecast => {
+                {this.state.Forecast.slice(this.state.ForecastRangeFirst, this.state.ForecastRangeLast).map(forecast => {
                     return (<ForecastCard key={forecast.dt_txt} forecastInfo={forecast} />)
                 })}
                 <div className="col-md-1">
-                    <img alt='Next' src={Previous_Icon} onClick={() => this.getNextForecasts()}></img>
-                </div>
+                    {this.state.ForecastRangeLast !== this.state.Forecast.length ?
+                        <img alt='Next' src={Previous_Icon} onClick={() => this.getNextForecasts()} /> : null}
+                    </div>
             </div>
 
         )

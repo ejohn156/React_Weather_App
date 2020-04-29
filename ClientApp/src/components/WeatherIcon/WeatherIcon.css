@@ -1,0 +1,10 @@
+.weatherIcon{
+    margin-top:0%;
+    height: 100%;
+    width: 60%;
+}
+
+.iconDiv {
+    text-align: center;
+    display: block;
+}

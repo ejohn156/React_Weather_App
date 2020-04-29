@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody } from "reactstrap";
 import {ForecastCarousel} from '../ForecastCarousel/ForecastCarousel'
 
 export class WeeklyForecast extends Component {
+    
     render() {
         return (
             <Card>
@@ -10,7 +11,7 @@ export class WeeklyForecast extends Component {
                     <h3>Weather Forecast</h3>
                 </CardHeader>
                 <CardBody>
-                    <ForecastCarousel></ForecastCarousel>
+                    <ForecastCarousel city={this.props.city}></ForecastCarousel>
                 </CardBody>
             </Card>
         )
