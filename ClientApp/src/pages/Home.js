@@ -11,15 +11,23 @@ function mapStateToProps(state) {
   })
 }
 
-
-
 class Home extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { city: this.props.city,
-                  user: 'test' }
+    this.state = {
+      city: this.props.city,
+      user: 'test'
+    }
   }
+
+  componentDidUpdate() {
+    if (this.props.city !== this.state.city) {
+        this.setState({
+          city: this.props.city
+        })
+    }
+}
 
   static displayName = Home.name;
   render() {
@@ -29,7 +37,7 @@ class Home extends Component {
           <div className="col-md-3">
             <div className="row">
               <div className="col-md-12">
-                <FavoritesList user={this.state.user}/>
+                <FavoritesList user={this.state.user} />
               </div>
             </div>
           </div>
@@ -50,7 +58,7 @@ class Home extends Component {
       </div>
     );
   }
-  
+
 }
 
 

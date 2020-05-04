@@ -6,8 +6,8 @@ const initialState = {
 
 function CityReducer (state = initialState, action) {
    switch(action.type) {
-       case CHANGE_CITY: return Object.assign({}, state, {
-           City : action.City
+       case CHANGE_CITY: return Object.assign({}, initialState, {
+           City : action.state
        })
    default: {
     return state

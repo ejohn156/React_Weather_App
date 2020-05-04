@@ -14,7 +14,8 @@ export class ForecastCarousel extends Component {
             ForecastRangeLast: 5,
             prevRangeFirst: 0,
             prevRangeLast: 5,
-            ForecastCount: 0
+            ForecastCount: 0,
+            city: this.props.city
         }
     }
 
@@ -44,8 +45,12 @@ export class ForecastCarousel extends Component {
         })
     }
 
-    getWeeklyForecasts() {
-        WeatherAPI.getForecast(this.props.city, process.env.REACT_APP_WeatherAPIKey).then(res => {
+    async getWeeklyForecasts() {
+        if(this.props.city !== this.state.city){
+        await this.changeStateToNewCity()
+    }
+
+        WeatherAPI.getForecast(this.state.city, process.env.REACT_APP_WeatherAPIKey).then(res => {
             this.setState({
                 Forecast: res.list,
                 prevRangeFirst: this.state.ForecastRangeFirst,
@@ -55,8 +60,20 @@ export class ForecastCarousel extends Component {
 
     }
 
+    async changeStateToNewCity(){
+        await this.setState({
+            city: this.props.city,
+            ForecastRangeFirst: 0,
+            ForecastRangeLast: 5,
+            prevRangeFirst: 0,
+            prevRangeLast: 5
+        })
+    }
+
     componentDidUpdate() {
-        if (this.state.prevRangeFirst !== this.state.ForecastRangeFirst || this.state.prevRangeLast !== this.state.ForecastRangeLast) {
+
+        if(this.state.prevRangeFirst !== this.state.ForecastRangeFirst || this.state.prevRangeLast !== this.state.ForecastRangeLast || this.props.city !== this.state.city)
+        {
             this.getWeeklyForecasts()
         }
     }
@@ -79,7 +96,7 @@ export class ForecastCarousel extends Component {
                 <div className="col-md-1">
                     {this.state.ForecastRangeLast !== this.state.Forecast.length ?
                         <img alt='Next' src={Previous_Icon} onClick={() => this.getNextForecasts()} /> : null}
-                    </div>
+                </div>
             </div>
 
         )

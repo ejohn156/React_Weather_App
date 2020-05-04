@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { Form, Input, FormGroup, Button} from 'reactstrap';
 import './SearchBar.css'
 import '../NavMenu/NavMenu.css'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+import {CHANGE_CITY} from '../../Store/City.action'
 
-export class SearchBar extends Component {
-    constructor() {
-        super()
+const changeCity = (newCity) => ({type: CHANGE_CITY, state: newCity})
+
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ changeCity }, dispatch)
+  }
+class SearchBar extends Component {
+    constructor(props) {
+        super(props)
         this.state = {
-            SearchText : ""
-        
+            SearchText : "", 
     }
 
     this.handleSearchTextChange = this.handleSearchTextChange.bind(this)
@@ -26,14 +34,14 @@ export class SearchBar extends Component {
     }
 
     handleSearchTextChange(event) {
-        console.log(event.target.value)
         this.setState({SearchText : event.target.value})
-        console.log("state: " + this.state.SearchText)
     }
 
     handleSearchSubmit(event){
         event.preventDefault()
-        console.log(this.state.SearchText)
-
+        this.props.changeCity(this.state.SearchText)
+        this.setState({SearchText: ""})       
     }
 }
+
+export default connect(null,mapDispatchToProps)(SearchBar)
